@@ -1,0 +1,88 @@
+---
+title: "MSDS 6306 - Live Session Unit 03 Assignment"
+author: "Dmitry Andreev"
+date: "January 31, 2018"
+output: html_document
+---
+
+## Question 1 - GitHub Cloning
+
+This question asks us to use Git to to clone the following repository to a local directory on our computer: https://github.com/caesar0301/awesome-public-datasets
+
+I used Windows PowerShell to complete this requirement as follows:  
+(Note: below each listed step, I have included the input command that I used in PowerShell)
+
+1. Check current directory  
+```{r, engine ='sh', pwd}
+pwd 
+```
+
+2. Navigate to MSDS 6306 Homework 3 folder  
+```{r, engine ='sh', cd}
+cd "C:\Users\Dmitr\Desktop\MSDS 6306 - 402\Unit 3\Homework"
+```
+
+3. Making a new folder / local repository called HW3GitRepo  
+```{r, engine ='sh', mkdir}
+mkdir HW3GitRepo
+```
+
+4. Navigate into newly created HW3GitRepo local repository  
+```{r, engine ='sh', cd2}
+cd "C:\Users\Dmitr\Desktop\MSDS 6306 - 402\Unit 3\Homework\HW3GitRepo"
+```
+
+5. Initial setup of a repository in the newly created HW3GitRepo folder  
+```{r, engine ='sh', init}
+git init "C:\Users\Dmitr\Desktop\MSDS 6306 - 402\Unit 3\Homework\HW3GitRepo"
+```
+
+6. Clone GitHub repository from URL given in question statement  
+```{r, engine ='sh', clone}
+git clone https://github.com/caesar0301/awesome-public-datasets 
+```
+
+## Question 2 - Data Summary
+
+For this question we are asked to extract the titanic.csv file from the zip compressed file included in the cloned repo from question 1 above and complete the following steps:
+
+a. Read in dataset contained in the titanic.csv extracted file and assign it to df.
+```{r, echo = TRUE, titanicdf}
+df <- read.csv("C:/Users/Dmitr/Desktop/MSDS 6306 - 402/Unit 3/Homework/awesome-public-datasets2/Datasets/titanic.csv/titanic.csv", stringsAsFactors = TRUE)
+```
+
+b. Output the respective count of females and males aboard the Titanic. Plot the frequency of females and males.
+```{r, echo = TRUE, MaleFemalePassengers}
+summary(df$Sex)
+plot(df$Sex,
+     ylim = c(0, 600),
+     ylab = "Number of Passengers",
+     main = "Number of Female and Male Passengers aboard the Titanic",
+     sub = "Total number of passengers = 891")
+```
+
+c. Use one apply function to output the means of Age, Fare, and Survival.
+```{r, echo = TRUE, AgeFareSurvivalMean}
+sapply(df[c("Age", "Fare", "Survived")], mean, na.rm = TRUE)
+```
+
+## Question 3 - Function Building
+
+For this question we are asked to create a helper function that can analyze a sleep research data set downloaded from http://talklab.psy.gla.ac.uk/L1_labs/lab_1/homework/index.html and are given a list of instructions that this function should execute.
+
+```{r, echo = TRUE, SleepDataFunction}
+SleepData <- read.csv("http://talklab.psy.gla.ac.uk/L1_labs/lab_1/homework/sleep_data_01.csv")
+
+SleepFunction <- function(x = SleepData) {
+  median_age <- median(x$Age, na.rm = TRUE)
+  min_sleep <- min(x$Duration, na.rm = TRUE)
+  max_sleep <- max(x$Duration, na.rm = TRUE)
+  mean_RSES <- mean(x$RSES, na.rm = TRUE)
+  sd_RSES <- sd(x$RSES, na.rm = TRUE)
+  report <- data.frame(median_age, mean_RSES / 5, sd_RSES / 5, c(max_sleep - min_sleep))
+  colnames(report) <- c("MedianAge", "SelfEsteem", "SE_SD", "DurationRange")
+  round(report, 1)
+}
+
+SleepFunction(SleepData)
+```

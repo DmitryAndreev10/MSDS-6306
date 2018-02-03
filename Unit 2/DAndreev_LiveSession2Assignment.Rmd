@@ -1,0 +1,119 @@
+---
+title: "MSDS 6306 - Live Session Unit 02 Assignment"
+author: "Dmitry Andreev"
+date: "January 24, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!--
+Note to you, the student:
+This is already in RMarkdown, so it should be easy to implement in your overall HW RMarkdown file.
+You only need to include the TODOs for HW submission, but keep in mind that you might need other code to create objects the TODO uses!
+-->
+
+### Question 1
+
+#### What is a basic workflow for reproducible research?
+
+The three stages making up the basic workflow for a reporducible research project are:
+
+* data gathering,
+* data analysis,
+* results presentation.
+
+The figure below provides a great visual aid for the actual workflow steps outlined above along with some of the results presentation options.
+
+![](C:/Users/Dmitr/Desktop/MSDS 6306 - 402/Unit 2/Homework/Workflow.png)
+
+
+#### What are five practical tips for making research reproducible?
+
+1. Document everything!
+2. Everything is a (text) file.
+3. All files should be human readable.
+4. Explicitly tie your files together.
+5. Have a plan to organize, store, and make your files available.
+
+
+#### Give an example of how you might implement each tip
+
+1. Document everything!
+    + Record R session info
+    + Future audience will know exactly what R version and packages were used
+
+2. Everything is a (text) file.
+    + Store information in simplest file format, ideally a .txt file
+    + Data in .csv files
+    + Analysis in .R files
+    + Avoid file formats such as .docx or .xlsx that ight not 'future-proof'
+  
+3. All files should be human readable.
+    + Comment on code to communicate it's purpose and design
+    + Use a style guide to follow consistent rules for formatting code
+    + Follow literate programming practice when needed
+
+4. Explicitly tie your files together.
+    + Use tie commands such as *source_data* and *merge*
+
+5. Have a plan to organize, store, and make your files available.
+    + Limit the amount of content any one file has
+    + Make the files modular
+
+#### Which one of these do you think will be the most difficult?
+
+I think the last point regarding having a plan to organizing, storing, and making file available will the most difficult to achieve. Researchers are usually eager to get started with collecting and analyzing data and tend to give little thought to the organization and accesability of the research. It takes discipline to take a step back and dedicate some time to planning how the research will be made reproducible.
+
+
+### Question 2 - air_hist.R
+
+#### Part a - Scatterplot showing monthly temperature trend for R built-in airquality dataset
+
+```{r air_hist_plot, echo=TRUE}
+plot(x = airquality$Month, 
+     y = airquality$Temp,
+     main = "Temperature by Month",
+     xlab = "Month",
+     ylab = "Temperature [Fahrenheit]",
+     pch = 19)
+```
+
+#### Part b - Scatterplot showing temperature versus ozone for R built-in airquality dataset
+
+```{r air_hist_plot2, echo=TRUE}
+plot(x = airquality$Temp,
+     y = airquality$Ozone,
+     main = "Temperature vs Ozone",
+     xlab = "Temperature [Fahrenheit]",
+     ylab = "Ozone",
+     pch = 19)
+```
+
+
+### Question 3 - knitr_cars.Rmd
+
+#### Part a - Scatterplot showing temperature versus pressure for R built-in cars dataset
+
+```{r pressure_plot, echo=TRUE}
+plot(x = pressure$pressure, 
+     y = pressure$temperature,
+     main = "Temperature vs Pressure",
+     xlab = "Pressure [mm of Hg]",
+     ylab = "Temperature [deg C]",
+     pch = 19)
+```
+
+
+#### Part b - Scatterplot showing pressure versus temperature for R built-in cars dataset
+
+```{r pressure_plot2, echo=TRUE}
+plot(x = pressure$temperature, 
+     y = pressure$pressure,
+     main = "Pressure vs Temperature",
+     xlab = "Temperature [deg C]",
+     ylab = "Pressure [mm of Hg]",
+     pch = 19)
+```
