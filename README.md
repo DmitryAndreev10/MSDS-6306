@@ -1,5 +1,10 @@
-# MSDS-6306
-Repository for MSDS 6306 Homework Assignments
+# MSDS 6306 Homework Repository
+This repository was created to upload and store my submissions for homework assignments in the MSDS 6306 Spring 2018 class
+
+
+
+Create a README.md file which explains the purpose of the repository, the topics included, the sources for the material you post, and contact information in case of questions. Remember, the one in the root directory should be general.  You are welcome to make short READMEs for each assignment individually in other folders.
+
 
 Project Title
 One Paragraph of project description goes here
