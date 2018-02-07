@@ -1,5 +1,5 @@
 # MSDS 6306 Homework Repository
-This repo was created to upload and store my submissions for homework assignments in the SMU MSDS 6306 Spring 2018 class.
+This repo was created to upload and store my submissions for homework assignments in the SMU MSDS 6306 class.
 
 There are seperate folders to store the required documents for the homework assignments and any supporting files. For example the folder titled 'Unit 1' represents the homework documents for the unit / module completed in the course during week 1. Unit 2 represents the homework documents for week 2 and so on in sequential order.
 
