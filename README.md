@@ -9,9 +9,9 @@ An summary for the individual homework assignments is listed below and will be u
 
 #### Unit 2 - Creating an RMarkdown document and formatting it, creating scatter plots 
 
-#### Unit 3
+#### Unit 3 - Using Git and GitHub, importing data into R, and building function in R
 
-#### Unit 4
+#### Unit 4 - Using FiveThirtyEight package, apply commands to data frame, creating barplots, uploading local repo to GitHub
 
 Note: Each Unit folder has a txt and R file containing my progress through the assigned modules in the R Swirl script.
 
