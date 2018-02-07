@@ -7,7 +7,7 @@ An summary for the individual homework assignments is listed below and will be u
 
 #### Unit 1 - Using R for basic math operations, random number generation, vector operations, creating a Data Science profile
 
-#### Unit 2
+#### Unit 2 - Creating an RMarkdown document and formatting it, creating scatter plots, 
 
 #### Unit 3
 
