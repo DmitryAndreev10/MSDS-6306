@@ -1,88 +1,126 @@
 ---
-title: "MSDS 6306 - Live Session Unit 03 Assignment"
+title: "MSDS 6306 - Live Session Unit 04 Assignment"
 author: "Dmitry Andreev"
-date: "January 31, 2018"
+date: "February 7, 2018"
 output: html_document
 ---
 
-## Question 1 - GitHub Cloning
+## Question 1 - FiveThirtyEight Data
 
-This question asks us to use Git to to clone the following repository to a local directory on our computer: https://github.com/caesar0301/awesome-public-datasets
+This question asks us to clone the eighteenth data set from the 'fivethirtyeight' package, assign it to a dataframe object, provide the URL to the new story related to this data set, and lastly use several R commands to get an understanding of the dataframe structure.
 
-I used Windows PowerShell to complete this requirement as follows:  
-(Note: below each listed step, I have included the input command that I used in PowerShell)
-
-1. Check current directory  
-```{r, engine ='sh', pwd}
-pwd 
+1. Install the fivethirtyeight package 
+```{r, echo = TRUE, InstallFiveThirtyEightPackage}
+installed.packages("fivethirtyeight")
 ```
 
-2. Navigate to MSDS 6306 Homework 3 folder  
-```{r, engine ='sh', cd}
-cd "C:\Users\Dmitr\Desktop\MSDS 6306 - 402\Unit 3\Homework"
+2. Assign eighteenth data set from fivethirtyeight package to an object called 'df'.
+```{r, echo = TRUE, Assign18thDataSetToDF}
+library(fivethirtyeight)
+df <- data.frame(college_recent_grads)
 ```
 
-3. Making a new folder / local repository called HW3GitRepo  
-```{r, engine ='sh', mkdir}
-mkdir HW3GitRepo
+3. Use a more detailed list of the data sets to write out the URL in a comment to the related news strory.
+```{r, echo = TRUE, URLRelatedNewsStory}
+vignette("fivethirtyeight", package = "fivethirtyeight")
+# The eighteenth data set in the package is titled "The Economic Guide to Picking a College Major" 
+# by Ben Casselman published on 09/12/2014
+# https://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/
 ```
 
-4. Navigate into newly created HW3GitRepo local repository  
-```{r, engine ='sh', cd2}
-cd "C:\Users\Dmitr\Desktop\MSDS 6306 - 402\Unit 3\Homework\HW3GitRepo"
+3. Use R command(s), give the dimensions and column names of this data frame.
+```{r, echo = TRUE, DFDimsColnames}
+# Apply the dim() function to obtain the dimensions of the df data frame
+dim(df)
+
+# Apply the colnames() function to output the columns name of the df data frame
+colnames(df)
 ```
 
-5. Initial setup of a repository in the newly created HW3GitRepo folder  
-```{r, engine ='sh', init}
-git init "C:\Users\Dmitr\Desktop\MSDS 6306 - 402\Unit 3\Homework\HW3GitRepo"
-```
-
-6. Clone GitHub repository from URL given in question statement  
-```{r, engine ='sh', clone}
-git clone https://github.com/caesar0301/awesome-public-datasets 
-```
 
 ## Question 2 - Data Summary
 
-For this question we are asked to extract the titanic.csv file from the zip compressed file included in the cloned repo from question 1 above and complete the following steps:
+This question asks us to perform several procedures to the newly assigned data frame labelled df from Question 1 as outlined below:
 
-a. Read in dataset contained in the titanic.csv extracted file and assign it to df.
-```{r, echo = TRUE, titanicdf}
-df <- read.csv("C:/Users/Dmitr/Desktop/MSDS 6306 - 402/Unit 3/Homework/awesome-public-datasets2/Datasets/titanic.csv/titanic.csv", stringsAsFactors = TRUE)
+1. Write an R command that gives the column names and another command that counts the number of columns but not rows of the data frame.
+```{r, echo = TRUE, DFColnamesColnumber}
+# Apply the colnames() function to output the columns name of the df data frame
+colnames(df)
+
+# Apply the ncol() function to output the number of columns for the df data frame
+ncol(df)
 ```
 
-b. Output the respective count of females and males aboard the Titanic. Plot the frequency of females and males.
-```{r, echo = TRUE, MaleFemalePassengers}
-summary(df$Sex)
-plot(df$Sex,
-     ylim = c(0, 600),
-     ylab = "Number of Passengers",
-     main = "Number of Female and Male Passengers aboard the Titanic",
-     sub = "Total number of passengers = 891")
+2. Generate a frequency count for each major_category in the data frame.
+```{r, echo = TRUE, MajorCategoryCount}
+# Load the plyr library
+library(plyr)
+
+# Apply the count function to the df data frame for the major_category column and assign it to a variable 
+# named major_count
+major_count <- count(df, "major_category")
+major_count
+
+# Check the class of the major_count variable to make sure it's a data frame
+class(major_count)
 ```
 
-c. Use one apply function to output the means of Age, Fare, and Survival.
-```{r, echo = TRUE, AgeFareSurvivalMean}
-sapply(df[c("Age", "Fare", "Survived")], mean, na.rm = TRUE)
+3. Make a barplot of the major_count variable.
+```{r, echo = TRUE, MajorCategoryBarplot}
+# Load the RColorBrewer library to create a more visually appealing plot
+library("RColorBrewer")
+
+# Use the par() function to make label text perpendicular to the axes and to increase the left margin 
+# space to make it easier to read the labels
+par(las = 2)
+par(mar = c(5, 12, 2, 1))
+
+# Use barplot() function to create barplot per requirements listed in question description
+barplot(major_count$freq,
+        names = major_count$major_category,
+        main = 'Count of College Majors per Category',
+        sub = "Major Categories obtained from Carnevale et al study",
+        xlab = "Count of College Majors",
+        xlim = c(0, 30),
+        col = brewer.pal(n = 8, name = "Dark2"),
+        cex.names = 0.8,
+        horiz = TRUE)
 ```
 
-## Question 3 - Function Building
+3. Write the fivethirtyeight data frame to a csv file.
+```{r, echo = TRUE, FivethiryeightCsvFile}
+# Check the current working directory
+getwd()
 
-For this question we are asked to create a helper function that can analyze a sleep research data set downloaded from http://talklab.psy.gla.ac.uk/L1_labs/lab_1/homework/index.html and are given a list of instructions that this function should execute.
+# Set working directory to MSDS 6306 homework #4 folder on local machine
+setwd("C:/Users/Dmitr/Desktop/MSDS 6306 - 402/Unit 4/Homework")
 
-```{r, echo = TRUE, SleepDataFunction}
-SleepData <- read.csv("http://talklab.psy.gla.ac.uk/L1_labs/lab_1/homework/sleep_data_01.csv")
-
-SleepFunction <- function(x = SleepData) {
-  median_age <- median(x$Age, na.rm = TRUE)
-  min_sleep <- min(x$Duration, na.rm = TRUE)
-  max_sleep <- max(x$Duration, na.rm = TRUE)
-  mean_RSES <- mean(x$RSES, na.rm = TRUE)
-  sd_RSES <- sd(x$RSES, na.rm = TRUE)
-  report <- data.frame(median_age, mean_RSES / 5, sd_RSES / 5, c(max_sleep - min_sleep))
-  colnames(report) <- c("MedianAge", "SelfEsteem", "SE_SD", "DurationRange")
-  round(report, 1)
-}
-
-SleepFunction(SleepData)
+# Write the fivethirtyeight data frame to a csv file, excludid row labels, in MSDS 6306 homework #4 folder 
+# on local machine
+write.csv(df, "C:/Users/Dmitr/Desktop/MSDS 6306 - 402/Unit 4/Homework/recent-grads.csv", row.names = FALSE)
 ```
+
+
+## Question 3 - Codebook
+
+This question asks use to create a new GitHub repository to store MSDS 6306 homework, create README.md files for the root directory and any individual assignment folders, and lastly post the RMarkdown script along with the resulting HTML file and associated fivethirtyeight .csv file and website link to the GitHub repo.
+
+1. Start a new repositroy on GitHub for MSDS 6306 homework. On your local device, make sure there is a directory for MSDS 6306 homework.
+    + New GitHub repository was created via Google Chrome browser
+    + New folders created on local machine using Windows browser
+```{r, echo = TRUE, HWDirectory}
+# Create folder labeled Homework within MSDS 6306 folder on local machine and set as working directory
+setwd("C:/Users/Dmitr/Desktop/MSDS 6306 - 402/Homework")
+```
+
+2. Create README.md file which explains purpose of repository for root directory as well as in folders for individual assignments.
+    + README.md files created using Windows Notepad and will be pushed to GitHub repo using Gitbash
+    
+3. In one of the nested directories, post RMarkdown script, HTML file, and fivethirtyeight .csv file for homework #4 assignment.
+    + Required files were saved in MSDS 6306 homework #4 folder
+    + Use GitBash to push local MSDSD 6306 homework folder to GitHub repo
+
+![](C:/Users/Dmitr/Desktop/MSDS 6306 - 402/Homework/Unit 4/HW4Question3GitBashCapture.PNG)    
+    
+4. Provide link to MSDS 6306 GitHub homework repository.
+    + https://github.com/dhouse0610/MSDS-6306
