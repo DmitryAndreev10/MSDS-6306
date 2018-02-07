@@ -7,10 +7,12 @@ An summary for the individual homework assignments is listed below and will be u
 
 #### Unit 1 - Using R for basic math operations, random number generation, vector operations, creating a Data Science profile
 
-#### Unit 2 - Creating an RMarkdown document and formatting it, creating scatter plots, 
+#### Unit 2 - Creating an RMarkdown document and formatting it, creating scatter plots 
 
 #### Unit 3
 
 #### Unit 4
+
+Note: Each Unit folder has a txt and R file containing my progress through the assigned modules in the R Swirl script.
 
 For any questions or concerns regarding this repository please contact Dmitry Andreev at DmitryAndreev10@gmail.com
