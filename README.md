@@ -5,12 +5,12 @@ There are seperate folders to store the required documents for the homework assi
 
 An summary for the individual homework assignments is listed below and will be updated as new files are uploaded to the repo:
 
-### Unit 1 - Using R for basic math operations, random number generation, vector operations, creating a Data Science profile
+#### Unit 1 - Using R for basic math operations, random number generation, vector operations, creating a Data Science profile
 
-### Unit 2
+#### Unit 2
 
-### Unit 3
+#### Unit 3
 
-### Unit 4
+#### Unit 4
 
 For any questions or concerns regarding this repository please contact Dmitry Andreev at DmitryAndreev10@gmail.com
