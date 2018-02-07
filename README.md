@@ -5,11 +5,11 @@ There are seperate folders to store the required documents for the homework assi
 
 ## Unit 1 - 
 
-## Unit 2
+### Unit 2
 
-## Unit 3
+#### Unit 3
 
-## Unit 4
+##### Unit 4
 
 To get a summary for the individual homework assignments refer to README.md files contained within folder of interest.
 
