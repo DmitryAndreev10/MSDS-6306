@@ -1,0 +1,147 @@
+---
+title: "MSDS 6306 - Live Session Unit 05 Assignment"
+author: "Dmitry Andreev"
+date: "February 14, 2018"
+output: html_document
+---
+
+**Backstory**: Your client is expecting a baby soon. However, he is not sure what to name the child. Being out of the loop, he hires you to help him figure out popular names. He provides for you raw data in order to help you make a decision.
+
+## Question 1 - Data Munging
+
+This question asks us to use the dataset contained within **yob2016.txt** representing a series of popular children’s names born in the year 2016 in the United States consisting of three colums representing their *first name*, *gender*, and *amount of children* given that name. We are also told that the data is raw and will need cleaning to make it tidy and usable.
+
+a. Import the .txt file into R to be able to process it. Assign the resulting data frame to an object df that consists of three columns with human-readable column names for each.
+```{r, echo = TRUE, ImportYob2016}
+# Check the current working directory
+getwd()
+
+# Check that the .txt file is withing the directory
+list.files()
+
+# Assign the .txt file to a data frame object
+df <- read.table("yob2016.txt", sep = ";", header = FALSE)
+
+# Assign column names to imported .txt file
+names(df) <- c("Name", "Gender", "Amount of Children")
+
+# Apply head function to make sure data frame was created correctly
+head(df)
+```
+
+b. Display the summary and structure of **df**
+```{r, echo = TRUE, SumStrDf}
+# Apply summary function
+summary(df)
+
+# Apply structure function
+str(df)
+```
+
+c. Write an R command to figure out which name in the data frame was enetered twice and misspelled. The cline did mention that he accidentally put three y's at the end 
+```{r, echo = TRUE, IncorrectNameYyy}
+# Change the format of Name variable from factor to character
+df$Name <- as.character(df$Name)
+
+# Check that the variable format changed succesfully
+class(df$Name)
+
+# Use the grep function to find the name containing yyy
+df[grep("yyy$", df$Name),]
+```
+
+d. Remove the incorrectly spelled name from the data frame and save in object y2016.
+```{r, echo = TRUE, RemoveIncorrectName}
+# Remove row 212 containing Fionayyy name from df and assign to y2016
+y2016 <- df[-212,]
+
+# Check rows 210 through 215 in y2016 to make sure row 212 has been removed
+y2016[210:215,]
+
+# Compare rows 210 through 215 in original data frame df with y2016 above
+df[210:215,]
+```
+
+## Question 2 - Data Merging
+
+This question asks us to use the datset contained within **yob2015.txt** which is similar to yob2016 from the previous question, however, the popular children's name information is from the year 2015.
+
+a. Import the .txt file into R to be able to process it. Assign the resulting data frame to an object y2015 with human-readable column names.
+```{r, echo = TRUE, ImportYob2015}
+# Assign the .txt file to a data frame object
+y2015 <- read.table("yob2015.txt", sep = ",", header = FALSE)
+
+# Assign column names to imported .txt file
+names(y2015) <- c("Name", "Gender", "Amount of Children")
+```
+
+b. Display the last ten rows in the dataframe. Describe something you find interesting about these 10 rows.
+```{r, echo = TRUE, Yob2015Tail}
+# Apply tail function to display last ten rows
+tail(y2015, n = 10)
+
+# seems that the last ten names have an equal amount of children [5] assigned to the names but I would imagine that the number should vary down the list
+```
+
+c. Merge **y2015** and **y2016** by Name column and assign it to data frame final.
+```{r, echo = TRUE, MergeYob2015&2016}
+# Change the format of Name variable from factor to character
+y2015$Name <- as.character(y2015$Name)
+
+# Merge y2015 and y2016 data frame objects by name
+final <- merge(y2015, y2016, all = FALSE, by = "Name")
+
+# Apply str function to understand structure of merged final data frame
+str(final)
+
+# Check for NA values in columns of final data frame
+colSums(is.na.data.frame(final))
+```
+
+## Question 3 - Data Summary
+
+Use data frame object **final** from the previous question to perform several techniques listed below.
+
+a. Create a new column called Total in final that adds the amount of children in 2015 and 2016 together. In those two years combined, how many people were given popular names?
+```{r, echo = TRUE, FinalTotal}
+# Add 2015 and 2016 amount of childre columns within final and assign to new column
+final$Total <- final$`Amount of Children.x` + final$`Amount of Children.y`
+
+# Apply head function to make sure new column Total was created correctly
+head(final)
+
+# Apply sum function to new Total column to count total number of popular names
+sum(final$Total)
+```
+
+b. Sort the data by Total. What are the top 10 most popular names?
+```{r, echo = TRUE, SortedTotal}
+head(final[order(-final$Total),], n = 10)
+```
+
+c. Omit boys and give the top 10 most popular girl’s names.
+```{r, echo = TRUE, 10MostPopularGirlNames}
+# Keep only girl names in final data frame and assign to GirlNames object
+GirlNames <- final[final$Gender.x == "F", ]
+
+# Order Total column in descending order and assign only top 10 rows to new object
+Top10GirlNames <- GirlNames[order(-GirlNames$Total),][1:10, ]
+
+# Display top 10 most popular girl's names
+Top10GirlNames
+```
+
+d. Write top 10 girl names and their Totals to CSV file. Leave out other columns.
+```{r, echo = TRUE, Top10PopularGirlNamesCSV}
+# Remove other columns in Top10GirlNames object and write to csv file
+write.csv(Top10GirlNames[ ,-c(2:5)], file = "Top10GirlNames.csv", row.names = FALSE)
+
+# Check that csv file has been correctly written to working directory
+list.files()
+```
+
+## Question 3 - Upload to GitHub
+
+Push at minimum your RMarkdown for this homework assignment and a Codebook to one of your GitHub repositories (you might place this in a Homework repo like last week).
+
+GitHub Link - https://github.com/dhouse0610/MSDS-6306
