@@ -13,6 +13,8 @@ A summary for the homework assignments is listed below and will be updated as ne
 
 #### Unit 4 - Using FiveThirtyEight package, apply commands to data frame, creating barplots, uploading local repo to GitHub
 
+#### Unit 5 - Creating Tidy Data by applying data merging, munging, and summary methods
+
 Note: Each Unit folder has a txt and R file containing my progress through the assigned modules in the R Swirl script.
 
 For any questions or concerns regarding this repository please contact Dmitry Andreev at DmitryAndreev10@gmail.com
