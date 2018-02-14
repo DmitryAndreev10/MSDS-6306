@@ -120,7 +120,7 @@ head(final[order(-final$Total),], n = 10)
 ```
 
 c. Omit boys and give the top 10 most popular girl’s names.
-```{r, echo = TRUE, 10MostPopularGirlNames}
+```{r, echo = TRUE, MostPopularGirlNames}
 # Keep only girl names in final data frame and assign to GirlNames object
 GirlNames <- final[final$Gender.x == "F", ]
 
@@ -144,4 +144,4 @@ list.files()
 
 Push at minimum your RMarkdown for this homework assignment and a Codebook to one of your GitHub repositories (you might place this in a Homework repo like last week).
 
-GitHub Link - https://github.com/dhouse0610/MSDS-6306
+GitHub Link - https://github.com/dhouse0610/MSDS-6306/tree/master/Unit%205
